@@ -190,6 +190,17 @@ func (p *Parser) ParseUTF16String() string {
 	return common.StripNull(common.DecodeUTF16(p.ParseBytes()))
 }
 
+func (p *Parser) ParseCyrillicString() string {
+	bytesBuffer := p.ParseBytes()
+
+	message := common.DecodeNonStandardEncoding(bytesBuffer, 41)
+	if common.ContainsUnreadable(message) {
+		message = common.DecodeNonStandardEncoding(bytesBuffer, 21)
+	}
+
+	return common.StripNull(message)
+}
+
 func (p *Parser) ParseString() string {
 	return common.StripNull(string(p.ParseBytes()))
 }

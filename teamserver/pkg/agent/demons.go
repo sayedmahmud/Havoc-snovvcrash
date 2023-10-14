@@ -3340,7 +3340,7 @@ func (a *Agent) TaskDispatch(RequestID uint32, CommandID uint32, Parser *parser.
 		var message string
 
 		if Parser.CanIRead([]parser.ReadType{parser.ReadBytes}) {
-			message = Parser.ParseString()
+			message = Parser.ParseCyrillicString()
 			logger.Debug(fmt.Sprintf("Agent: %x, Command: COMMAND_OUTPUT, len: %d", AgentID, len(message)))
 
 			Output["Type"] = "Good"
@@ -3368,7 +3368,7 @@ func (a *Agent) TaskDispatch(RequestID uint32, CommandID uint32, Parser *parser.
 					for _, BofCallback := range a.BofCallbacks {
 						if BofCallback.TaskID == RequestID {
 							// store the output and later send it back to the python module
-							BofCallback.Output += Parser.ParseString()
+							BofCallback.Output += Parser.ParseCyrillicString()
 							found = true
 							break
 						}
@@ -3378,7 +3378,7 @@ func (a *Agent) TaskDispatch(RequestID uint32, CommandID uint32, Parser *parser.
 						// simply print the output on the agent console
 						var Output = make(map[string]string)
 						Output["Type"] = "Good"
-						Output["Output"] = Parser.ParseString()
+						Output["Output"] = Parser.ParseCyrillicString()
 						Output["Message"] = fmt.Sprintf("Received Output [%v bytes]:", len(Output["Output"]))
 						if len(Output["Output"]) > 0 {
 							teamserver.AgentConsole(a.NameID, HAVOC_CONSOLE_MESSAGE, Output)

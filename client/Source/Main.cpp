@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 {
     auto Arguments = cmdline::parser();
     auto HavocApp = QApplication(argc, argv);
-    QTextCodec* codec = QTextCodec::codecForName("UTF-8");
+    QTextCodec* codec = QTextCodec::codecForName("Windows-1251");
     QTextCodec::setCodecForLocale(codec);
 
     spdlog::set_pattern("[%T] [%^%l%$] %v");

@@ -30,7 +30,7 @@ ts-cleanup:
 client-build: 
 	@ echo "[*] building client"
 	@ mkdir client/Build; cd client/Build; cmake ..
-	@ if [ -d "client/Modules" ]; then echo "Modules installed"; else git clone https://github.com/HavocFramework/Modules client/Modules --single-branch --branch `git rev-parse --abbrev-ref HEAD`; fi
+	@ if [ -d "client/Modules" ]; then echo "Modules installed"; else git clone https://github.com/snovvcrash/HavocModules client/Modules --single-branch --branch `git rev-parse --abbrev-ref HEAD`; fi
 	@ cmake --build client/Build -- -j 4
 
 client-cleanup:
@@ -42,7 +42,7 @@ client-cleanup:
 	@ rm -rf ./client/cmake-build-debug
 	@ rm -rf ./client/Havoc
 	@ rm -rf ./client/Modules
-
+	@ rm -rf /tmp/mingw-musl-*
 
 # cleanup target 
 clean: ts-cleanup client-cleanup

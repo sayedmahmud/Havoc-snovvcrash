@@ -21,6 +21,8 @@ import (
 
 	"golang.org/x/image/bmp"
 	"golang.org/x/text/encoding/unicode"
+
+	"github.com/xela07ax/XelaGoDoc/encodingStdout"
 )
 
 func ParseWorkingHours(WorkingHours string) (int32, error) {
@@ -113,6 +115,17 @@ func DecodeUTF16(b []byte) string {
 	}
 
 	return ret.String()
+}
+
+func DecodeNonStandardEncoding(b []byte, encoding int) string {
+	return string(encodingStdout.Convert(encoding, b))
+}
+
+func ContainsUnreadable(input string) bool {
+	pattern := "[^\\x00-\\x7FА-яёЁ]"
+	patternRegex := regexp.MustCompile(pattern)
+	matches := patternRegex.FindAllString(input, -1)
+	return len(matches) > 0
 }
 
 func EncodeUTF16(s string) string {
